@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCarton - Tienda Online</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --light-color: #e8f5e9;
+            --dark-color: #1b5e20;
+            --text-color: #333;
+            --white: #ffffff;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            max-height: 60px;
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--light-color);
+        }
+        
+        .auth-buttons button {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            background-color: var(--dark-color);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        
+        .active-section {
+            display: block;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        /* Página de Bienvenida */
+        .welcome-section {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        .welcome-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .welcome-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .welcome-buttons {
+            margin-top: 2rem;
+        }
+        
+        .welcome-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 0 0.5rem;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .welcome-btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        /* Catálogo */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--dark-color);
+        }
+        
+        /* Carrito */
+        .cart-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 1rem;
+            border-radius: 4px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background-color: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .quantity {
+            margin: 0 0.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .remove-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .checkout-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+            float: right;
+        }
+        
+        .checkout-btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        /* Formularios */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        /* Admin Panel */
+        .admin-panel-container {
+            position: relative;
+        }
+        
+        .close-admin {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .admin-tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .admin-content {
+            display: none;
+        }
+        
+        .admin-content.active {
+            display: block;
+        }
+        
+        .product-list {
+            margin-top: 1.5rem;
+        }
+        
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .product-actions button {
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.6rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .edit-btn {
+            background-color: #ffc107;
+            color: #000;
+        }
+        
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Login */
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1.5rem;
+        }
+        
+        /* Notificación de carrito */
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: none;
+            animation: fadeInOut 3s ease-in-out;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .cart-notification {
+                right: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="https://via.placeholder.com/150x60/2e7d32/ffffff?text=EcoCarton" alt="EcoCarton Logo" class="logo" id="site-logo">
+                <h1>EcoCarton</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('welcome')">Inicio</a></li>
+                    <li><a href="#" onclick="showSection('catalog')">Catálogo</a></li>
+                    <li><a href="#" onclick="showSection('cart')">Carrito <span id="cart-count">(0)</span></a></li>
+                    <li><a href="#" onclick="showSection('about')">Nosotros</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button onclick="showLogin()">Iniciar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notificación de carrito -->
+    <div class="cart-notification" id="cart-notification">
+        Producto añadido al carrito
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Página de Bienvenida -->
+        <section id="welcome" class="active-section welcome-section">
+            <div class="welcome-content" id="welcome-content">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Catálogo -->
+        <section id="catalog">
+            <h2>Nuestros Productos</h2>
+            <div class="catalog-grid" id="product-grid">
+                <!-- Los productos se cargarán dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Carrito -->
+        <section id="cart">
+            <h2>Tu Carrito de Compras</h2>
+            <div class="cart-items" id="cart-items">
+                <!-- Los elementos del carrito se cargarán dinámicamente -->
+            </div>
+            <div class="cart-total" id="cart-total">Total: $0.00</div>
+            <button class="checkout-btn" onclick="showSection('checkout')">Proceder al Pago</button>
+        </section>
+
+        <!-- Checkout -->
+        <section id="checkout">
+            <h2>Finalizar Compra</h2>
+            <form id="checkout-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nombre Completo</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Dirección</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="payment">Método de Pago</label>
+                    <select id="payment" name="payment" required>
+                        <option value="">Seleccione un método</option>
+                        <option value="credit">Tarjeta de Crédito</option>
+                        <option value="debit">Tarjeta de Débito</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="cash">Efectivo al Recibir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notas Adicionales (Opcional)</label>
+                    <textarea id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Realizar Pedido</button>
+            </form>
+        </section>
+
+        <!-- Nosotros -->
+        <section id="about">
+            <h2>Sobre Nosotros</h2>
+            <div id="about-content">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Panel de Administración -->
+        <section id="admin-panel">
+            <div class="admin-panel-container">
+                <button class="close-admin" onclick="closeAdminPanel()">&times;</button>
+                
+                <div class="admin-tabs">
+                    <div class="admin-tab active" onclick="showAdminTab('general')">General</div>
+                    <div class="admin-tab" onclick="showAdminTab('welcome')">Página de Bienvenida</div>
+                    <div class="admin-tab" onclick="showAdminTab('products')">Productos</div>
+                    <div class="admin-tab" onclick="showAdminTab('about')">Nosotros</div>
+                </div>
+                
+                <div id="admin-general" class="admin-content active">
+                    <h3>Configuración General</h3>
+                    <div class="form-group">
+                        <label for="site-title">Título del Sitio</label>
+                        <input type="text" id="site-title" value="EcoCarton">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo-upload">Logo del Sitio</label>
+                        <input type="file" id="logo-upload" accept="image/*">
+                    </div>
+                    <button class="submit-btn" onclick="saveGeneralSettings()">Guardar Cambios</button>
+                </div>
+                
+                <div id="admin-welcome" class="admin-content">
+                    <h3>Editar Página de Bienvenida</h3>
+                    <div class="form-group">
+                        <label for="welcome-title">Título</label>
+                        <input type="text" id="welcome-title" value="Bienvenido a EcoCarton">
+                    </div>
+                    <div class="form-group">
+                        <label for="welcome-subtitle">Subtítulo</label>
+                        <input type="text" id="welcome-subtitle" value="Tu tienda online de productos ecológicos">
+                    </div>
+                    <div class="form-group">
+                        <label for="welcome-content">Contenido</label>
+                        <textarea id="welcome-content-editor" rows="10"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="welcome-image">Imagen de Bienvenida</label>
+                        <input type="file" id="welcome-image" accept="image/*">
+                        <div id="welcome-image-preview"></div>
+                    </div>
+                    <button class="submit-btn" onclick="saveWelcomeContent()">Guardar Cambios</button>
+                </div>
+                
+                <div id="admin-products" class="admin-content">
+                    <h3>Gestión de Productos</h3>
+                    <button class="submit-btn" onclick="showProductModal()">Agregar Producto</button>
+                    <div class="product-list" id="admin-product-list">
+                        <!-- Los productos se cargarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <div id="admin-about" class="admin-content">
+                    <h3>Editar Página Nosotros</h3>
+                    <div class="form-group">
+                        <label for="about-title">Título</label>
+                        <input type="text" id="about-title" value="Sobre Nosotros">
+                    </div>
+                    <div class="form-group">
+                        <label for="about-content">Contenido</label>
+                        <textarea id="about-content-editor" rows="10"></textarea>
+                    </div>
+                    <button class="submit-btn" onclick="saveAboutContent()">Guardar Cambios</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="login-modal" class="modal">
+        <div class="login-container">
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-username">Usuario</label>
+                    <input type="text" id="admin-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Contraseña</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Producto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="product-modal-title">Agregar Producto</h3>
+                <button class="close-modal" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-group">
+                    <label for="product-name">Nombre del Producto</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descripción</label>
+                    <textarea id="product-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Precio</label>
+                    <input type="number" id="product-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-image">Imagen del Producto</label>
+                    <input type="file" id="product-image" accept="image/*">
+                    <div id="image-preview"></div>
+                </div>
+                <button type="submit" class="submit-btn" id="product-submit-btn">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>EcoCarton</h3>
+                <p>Tu tienda online de productos ecológicos y sostenibles.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: Grupocdrd@gmail.com </p>
+                <p>Direccion: Cl. 2 Sur #69 - 86, Buenaventura, Valle del Cauca</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#" onclick="showSection('welcome')">Inicio</a></li>
+                    <li><a href="#" onclick="showSection('catalog')">Catálogo</a></li>
+                    <li><a href="#" onclick="showSection('about')">Nosotros</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 EcoCarton. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Datos iniciales
+        let products = [
+            { id: 1, name: "Caja Ecológica Pequeña", description: "Caja de cartón reciclado ideal para pequeños envíos.", price: 5.99, image: "https://via.placeholder.com/300x200/4caf50/ffffff?text=Caja+Pequeña" },
+            { id: 2, name: "Caja Ecológica Mediana", description: "Caja de cartón reciclado para envíos medianos.", price: 8.99, image: "https://via.placeholder.com/300x200/4caf50/ffffff?text=Caja+Mediana" },
+            { id: 3, name: "Caja Ecológica Grande", description: "Caja de cartón reciclado para envíos grandes.", price: 12.99, image: "https://via.placeholder.com/300x200/4caf50/ffffff?text=Caja+Grande" },
+            { id: 4, name: "Bolsas de Papel Reciclado", description: "Pack de 10 bolsas de papel reciclado.", price: 4.99, image: "https://via.placeholder.com/300x200/4caf50/ffffff?text=Bolsas+Papel" }
+        ];
+
+        let cart = [];
+        let isAdminLoggedIn = false;
+        
+        let welcomeContent = {
+            title: "Bienvenido a EcoCarton",
+            subtitle: "Tu tienda online de productos ecológicos",
+            content: "<p>En EcoCarton nos dedicamos a ofrecer productos de embalaje sostenibles y respetuosos con el medio ambiente. Nuestros productos están fabricados con materiales 100% reciclados y son completamente reciclables.</p><p>Explora nuestro catálogo y descubre cómo puedes hacer tus envíos más ecológicos sin comprometer la calidad.</p>",
+            image: "https://via.placeholder.com/800x400/4caf50/ffffff?text=EcoCarton+Bienvenida"
+        };
+        
+        let aboutContent = {
+            title: "Sobre Nosotros",
+            content: "<p>EcoCarton es una empresa comprometida con el medio ambiente, especializada en la producción y venta de productos de cartón reciclado. Nuestra misión es ofrecer soluciones de embalaje sostenibles que reduzcan el impacto ambiental.</p><p>Fundada en 2020, hemos crecido constantemente gracias a nuestro compromiso con la calidad y la sostenibilidad. Todos nuestros productos están fabricados con materiales 100% reciclados y son completamente reciclables.</p>"
+        };
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadCart();
+            loadWelcomeContent();
+            loadAboutContent();
+            updateCartCount();
+            
+            // Event listeners para formularios
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('checkout-form').addEventListener('submit', handleCheckout);
+            document.getElementById('product-form').addEventListener('submit', handleProductSubmit);
+            document.getElementById('product-image').addEventListener('change', previewImage);
+            document.getElementById('logo-upload').addEventListener('change', previewLogo);
+            document.getElementById('welcome-image').addEventListener('change', previewWelcomeImage);
+        });
+
+        // Funciones de navegación
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active-section');
+            
+            // Si es el carrito, actualizar la vista
+            if (sectionId === 'cart') {
+                updateCartView();
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function closeAdminPanel() {
+            showSection('welcome');
+        }
+
+        // Funciones de productos
+        function loadProducts() {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+            
+            // Si el admin está logueado, también cargar la lista de productos en el panel
+            if (isAdminLoggedIn) {
+                loadAdminProducts();
+            }
+        }
+
+        // Funciones del carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            saveCart();
+            showCartNotification();
+            
+            // No abrir automáticamente el carrito, solo mostrar notificación
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartView();
+            updateCartCount();
+            saveCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartView();
+                    updateCartCount();
+                    saveCart();
+                }
+            }
+        }
+
+        function updateCartView() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Tu carrito está vacío</p>';
+                cartTotal.textContent = 'Total: $0.00';
+                return;
+            }
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-info">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div>
+                            <h3>${item.name}</h3>
+                            <p>Precio unitario: $${item.price.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = `(${count})`;
+        }
+
+        function showCartNotification() {
+            const notification = document.getElementById('cart-notification');
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function loadCart() {
+            const savedCart = localStorage.getItem('ecocarton-cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartView();
+                updateCartCount();
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('ecocarton-cart', JSON.stringify(cart));
+        }
+
+        // Funciones de checkout
+        function handleCheckout(e) {
+            e.preventDefault();
+            alert('¡Pedido realizado con éxito! Te contactaremos pronto para confirmar los detalles.');
+            cart = [];
+            updateCartView();
+            updateCartCount();
+            saveCart();
+            showSection('welcome');
+        }
+
+        // Funciones de administración
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            
+            if (username === 'admin' && password === 'ecocarton2025') {
+                isAdminLoggedIn = true;
+                closeLogin();
+                showSection('admin-panel');
+                loadAdminProducts();
+                loadAdminWelcomeContent();
+                document.querySelector('.auth-buttons').innerHTML = '<button onclick="logout()">Cerrar Sesión</button>';
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        }
+
+        function logout() {
+            isAdminLoggedIn = false;
+            showSection('welcome');
+            document.querySelector('.auth-buttons').innerHTML = '<button onclick="showLogin()">Iniciar Sesión</button>';
+        }
+
+        function showAdminTab(tabId) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.admin-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Activar la pestaña seleccionada
+            let tabIndex;
+            switch(tabId) {
+                case 'general': tabIndex = 1; break;
+                case 'welcome': tabIndex = 2; break;
+                case 'products': tabIndex = 3; break;
+                case 'about': tabIndex = 4; break;
+            }
+            
+            document.querySelector(`.admin-tab:nth-child(${tabIndex})`).classList.add('active');
+            document.getElementById(`admin-${tabId}`).classList.add('active');
+        }
+
+        function loadAdminProducts() {
+            const adminProductList = document.getElementById('admin-product-list');
+            adminProductList.innerHTML = '';
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <h3>${product.name}</h3>
+                        <p>$${product.price.toFixed(2)}</p>
+                    </div>
+                    <div class="product-actions">
+                        <button class="edit-btn" onclick="editProduct(${product.id})">Editar</button>
+                        <button class="delete-btn" onclick="deleteProduct(${product.id})">Eliminar</button>
+                    </div>
+                `;
+                adminProductList.appendChild(productItem);
+            });
+        }
+
+        function showProductModal(productId = null) {
+            const modal = document.getElementById('product-modal');
+            const title = document.getElementById('product-modal-title');
+            const form = document.getElementById('product-form');
+            
+            if (productId) {
+                // Modo edición
+                title.textContent = 'Editar Producto';
+                const product = products.find(p => p.id === productId);
+                document.getElementById('product-id').value = product.id;
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-description').value = product.description;
+                document.getElementById('product-price').value = product.price;
+                document.getElementById('image-preview').innerHTML = `<img src="${product.image}" alt="Vista previa" style="max-width: 100%; margin-top: 10px;">`;
+            } else {
+                // Modo agregar
+                title.textContent = 'Agregar Producto';
+                form.reset();
+                document.getElementById('image-preview').innerHTML = '';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        function previewImage() {
+            const file = document.getElementById('product-image').files[0];
+            const preview = document.getElementById('image-preview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Vista previa" style="max-width: 100%; margin-top: 10px;">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+
+        function previewLogo() {
+            const file = document.getElementById('logo-upload').files[0];
+            const logo = document.getElementById('site-logo');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    logo.src = e.target.result;
+                    localStorage.setItem('ecocarton-logo', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewWelcomeImage() {
+            const file = document.getElementById('welcome-image').files[0];
+            const preview = document.getElementById('welcome-image-preview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Vista previa" style="max-width: 100%; margin-top: 10px;">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('product-id').value;
+            const name = document.getElementById('product-name').value;
+            const description = document.getElementById('product-description').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const imageFile = document.getElementById('product-image').files[0];
+            
+            if (id) {
+                // Editar producto existente
+                const index = products.findIndex(p => p.id === parseInt(id));
+                if (index !== -1) {
+                    products[index].name = name;
+                    products[index].description = description;
+                    products[index].price = price;
+                    
+                    if (imageFile) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            products[index].image = e.target.result;
+                            saveProducts();
+                            loadProducts();
+                            closeProductModal();
+                        };
+                        reader.readAsDataURL(imageFile);
+                    } else {
+                        saveProducts();
+                        loadProducts();
+                        closeProductModal();
+                    }
+                }
+            } else {
+                // Agregar nuevo producto
+                const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newProduct = {
+                            id: newId,
+                            name: name,
+                            description: description,
+                            price: price,
+                            image: e.target.result
+                        };
+                        
+                        products.push(newProduct);
+                        saveProducts();
+                        loadProducts();
+                        closeProductModal();
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    // Usar imagen por defecto si no se selecciona ninguna
+                    const newProduct = {
+                        id: newId,
+                        name: name,
+                        description: description,
+                        price: price,
+                        image: 'https://via.placeholder.com/300x200/4caf50/ffffff?text=Nuevo+Producto'
+                    };
+                    
+                    products.push(newProduct);
+                    saveProducts();
+                    loadProducts();
+                    closeProductModal();
+                }
+            }
+        }
+
+        function editProduct(productId) {
+            showProductModal(productId);
+        }
+
+        function deleteProduct(productId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                products = products.filter(p => p.id !== productId);
+                saveProducts();
+                loadProducts();
+            }
+        }
+
+        function saveProducts() {
+            localStorage.setItem('ecocarton-products', JSON.stringify(products));
+        }
+
+        function loadProductsFromStorage() {
+            const savedProducts = localStorage.getItem('ecocarton-products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            }
+        }
+
+        // Funciones de configuración general
+        function saveGeneralSettings() {
+            const siteTitle = document.getElementById('site-title').value;
+            document.querySelector('h1').textContent = siteTitle;
+            document.title = siteTitle + ' - Tienda Online';
+            
+            localStorage.setItem('ecocarton-title', siteTitle);
+            alert('Configuración guardada correctamente');
+        }
+
+        function loadGeneralSettings() {
+            const savedTitle = localStorage.getItem('ecocarton-title');
+            const savedLogo = localStorage.getItem('ecocarton-logo');
+            
+            if (savedTitle) {
+                document.getElementById('site-title').value = savedTitle;
+                document.querySelector('h1').textContent = savedTitle;
+                document.title = savedTitle + ' - Tienda Online';
+            }
+            
+            if (savedLogo) {
+                document.getElementById('site-logo').src = savedLogo;
+            }
+        }
+
+        // Funciones de contenido "Bienvenida"
+        function loadWelcomeContent() {
+            const savedWelcome = localStorage.getItem('ecocarton-welcome');
+            if (savedWelcome) {
+                welcomeContent = JSON.parse(savedWelcome);
+            }
+            
+            document.getElementById('welcome-content').innerHTML = `
+                <h2>${welcomeContent.title}</h2>
+                <h3>${welcomeContent.subtitle}</h3>
+                <img src="${welcomeContent.image}" alt="Bienvenida" class="welcome-image">
+                ${welcomeContent.content}
+                <div class="welcome-buttons">
+                    <a href="#" class="welcome-btn" onclick="showSection('catalog')">Ver Catálogo</a>
+                    <a href="#" class="welcome-btn" onclick="showSection('about')">Conócenos</a>
+                </div>
+            `;
+        }
+
+        function loadAdminWelcomeContent() {
+            document.getElementById('welcome-title').value = welcomeContent.title;
+            document.getElementById('welcome-subtitle').value = welcomeContent.subtitle;
+            document.getElementById('welcome-content-editor').value = welcomeContent.content.replace(/<[^>]*>/g, '');
+            document.getElementById('welcome-image-preview').innerHTML = `<img src="${welcomeContent.image}" alt="Vista previa" style="max-width: 100%; margin-top: 10px;">`;
+        }
+
+        function saveWelcomeContent() {
+            welcomeContent.title = document.getElementById('welcome-title').value;
+            welcomeContent.subtitle = document.getElementById('welcome-subtitle').value;
+            
+            // Procesar el contenido para mantener los párrafos
+            const contentText = document.getElementById('welcome-content-editor').value;
+            welcomeContent.content = contentText.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+            
+            // Guardar imagen si se ha seleccionado una nueva
+            const imageFile = document.getElementById('welcome-image').files[0];
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    welcomeContent.image = e.target.result;
+                    localStorage.setItem('ecocarton-welcome', JSON.stringify(welcomeContent));
+                    loadWelcomeContent();
+                    alert('Contenido guardado correctamente');
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                localStorage.setItem('ecocarton-welcome', JSON.stringify(welcomeContent));
+                loadWelcomeContent();
+                alert('Contenido guardado correctamente');
+            }
+        }
+
+        // Funciones de contenido "Nosotros"
+        function loadAboutContent() {
+            const savedAbout = localStorage.getItem('ecocarton-about');
+            if (savedAbout) {
+                aboutContent = JSON.parse(savedAbout);
+            }
+            
+            document.getElementById('about-content').innerHTML = aboutContent.content;
+            document.getElementById('about-title').value = aboutContent.title;
+            document.getElementById('about-content-editor').value = aboutContent.content.replace(/<[^>]*>/g, '');
+        }
+
+        function saveAboutContent() {
+            aboutContent.title = document.getElementById('about-title').value;
+            aboutContent.content = document.getElementById('about-content-editor').value;
+            
+            // Formatear el contenido para mostrarlo con párrafos
+            const formattedContent = aboutContent.content.split('\n').map(paragraph => {
+                return paragraph.trim() ? `<p>${paragraph}</p>` : '';
+            }).join('');
+            
+            document.getElementById('about-content').innerHTML = formattedContent;
+            aboutContent.content = formattedContent;
+            
+            localStorage.setItem('ecocarton-about', JSON.stringify(aboutContent));
+            alert('Contenido guardado correctamente');
+        }
+
+        // Cargar datos al iniciar
+        loadProductsFromStorage();
+        loadGeneralSettings();
+        loadCart();
+    </script>
+</body>
+</html>
